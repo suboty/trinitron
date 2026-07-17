@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "trinitron"
+version = "0.1.0"
+description = "A collection of Manim animations and code examples created for my educational series on compiler engineering"
+authors = ["Nik Moroshkin <seed.duboty@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# Main animation engine
+manim = "^0.19.0"
+
+# Math rendering support
+sympy = "^1.13"
+
+# Numerical operations
+numpy = "^2.0"
+
+# Image/video processing helpers
+pillow = "^10.4"
+
+jupyter = "^1.1.0"
+ipython = "^8.26"
+
+rich = "^13.7"
+
+[tool.poetry.group.dev.dependencies]
+# Code formatting
+black = "^24.8"
+
+# Linting
+ruff = "^0.6"
+
+# Type checking
+mypy = "^1.11"
+
+# Testing
+pytest = "^8.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
