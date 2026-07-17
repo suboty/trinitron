@@ -1,0 +1,94 @@
+# ==========
+# Python
+# ==========
+
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+ENV/
+.venv
+.idea/
+.vscode/
+*.swp
+*.swo
+*.egg-info/
+dist/
+build/
+.ipynb_checkpoints/
+
+# ==========
+# LaTeX / XeLaTeX
+# ==========
+
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.xdv
+*.bcf
+*.run.xml
+*.pdf
+!examples/
+!examples/*.pdf
+
+# ==========
+# Graphviz
+# ==========
+
+*.png
+*.svg
+*.eps
+*.ps
+*.dot
+*.tex
+!examples/*.png
+!examples/*.svg
+!examples/*.eps
+!examples/*.ps
+!examples/*.dot
+!examples/*.tex
+
+# ==========
+# Bash
+# ==========
+
+*.bak
+*.old
+*.orig
+
+# ==========
+# OS
+# ==========
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+*~
+
+# ==========
+# tmp files
+# ==========
+
+*.tmp
+*.temp
+*.cache
