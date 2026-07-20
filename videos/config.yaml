@@ -5,6 +5,12 @@ video:
   frame_height_ratio: 16
   frame_rate: 60
 
+safe_zones:
+  top: 0.12
+  bottom: 0.08
+  left: 0.05
+  right: 0.08
+
 colors:
   background: "#EEF5FC"
   text: "#1F2933"

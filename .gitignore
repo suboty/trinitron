@@ -98,3 +98,6 @@ Desktop.ini
 # ==========
 
 videos/rendered/*.mp4
+videos/rendered/images/*
+videos/rendered/texts/*
+videos/rendered/videos/*

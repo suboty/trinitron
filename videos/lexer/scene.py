@@ -743,13 +743,17 @@ class LexerAnimation(MovingCameraScene):
 
         source_group = VGroup(*cells)
 
+        flash_offset_y = scan_config.get("flash_offset_y", 0)
+        flash_position = self.buffer.get_center() + DOWN * abs(
+            flash_offset_y) if flash_offset_y < 0 else self.buffer.get_center() + UP * flash_offset_y
+
         self.play(
             self.replace_status(
                 "token complete",
                 ACCENT_COLOR,
             ),
             Flash(
-                self.buffer.copy().shift(DOWN * 0.1),
+                flash_position,
                 color=ACCENT_COLOR,
                 flash_radius=scan_config["flash_radius"],
                 line_length=scan_config["flash_line_length"],
@@ -967,11 +971,6 @@ class LexerAnimation(MovingCameraScene):
         )
 
         self.play(
-            FadeOut(self.parser_arrow),
-            run_time=0.3,
-        )
-
-        self.play(
             LaggedStart(
                 *[
                     Create(edge)
@@ -992,6 +991,12 @@ class LexerAnimation(MovingCameraScene):
             ),
             run_time=parser_config["node_duration"],
         )
+
+        if parser_config.get("hide_arrow_after", False):
+            self.play(
+                FadeOut(self.parser_arrow),
+                run_time=parser_config.get("arrow_fade_duration", 0.5),
+            )
 
         self.play(
             Write(self.final_caption),

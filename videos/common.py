@@ -22,6 +22,18 @@ config.frame_width = CONFIG["video"]["frame_width"]
 config.frame_height = config.frame_width * CONFIG["video"]["frame_height_ratio"] / 9
 config.frame_rate = CONFIG["video"]["frame_rate"]
 
+SAFE_ZONES = CONFIG.get("safe_zones", {})
+SAFE_TOP = SAFE_ZONES.get("top", 0.12)
+SAFE_BOTTOM = SAFE_ZONES.get("bottom", 0.08)
+SAFE_LEFT = SAFE_ZONES.get("left", 0.05)
+SAFE_RIGHT = SAFE_ZONES.get("right", 0.08)
+FRAME_WIDTH = config.frame_width
+FRAME_HEIGHT = config.frame_height
+SAFE_X_MIN = -FRAME_WIDTH/2 + FRAME_WIDTH * SAFE_LEFT
+SAFE_X_MAX = FRAME_WIDTH/2 - FRAME_WIDTH * SAFE_RIGHT
+SAFE_Y_MIN = -FRAME_HEIGHT/2 + FRAME_HEIGHT * SAFE_BOTTOM
+SAFE_Y_MAX = FRAME_HEIGHT/2 - FRAME_HEIGHT * SAFE_TOP
+
 # Colors
 BACKGROUND = CONFIG["colors"]["background"]
 config.background_color = BACKGROUND
