@@ -2,7 +2,7 @@
 
 A collection of Manim animations and code examples created for my educational series on compiler engineering.
 
-Built with using [manim](https://github.com/3b1b/manim).
+Built with using [manim](https://github.com/manimCommunity/manim).
 
 ## License
 

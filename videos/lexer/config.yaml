@@ -1,0 +1,212 @@
+lexer:
+  source_code: "int result = max(a + b, 42);"
+  
+  # Camera`s position
+  camera:
+    intro_y: 0
+    lexer_y: -16
+    tokens_y: -32
+    parser_y: -48
+    move_duration: 2.8
+    frame_width: 8
+
+  # Init scene
+  intro:
+    title_y_offset: 5.6
+    line1_font_size: 35
+    line1_y_offset: 3.6
+    line2_font_size: 30
+    line2_y_offset: 2.2
+    line2_line_spacing: 1.05
+    code_box_width: 6.8
+    code_box_height: 2.0
+    code_box_corner_radius: 0.16
+    code_box_stroke_width: 2
+    code_box_fill_opacity: 0.04
+    code_font_size: 34
+    code_buff: 0.18
+    compiler_label_font_size: 24
+    compiler_label_y_offset: 2.1
+    compiler_arrow_buff: 0.16
+    compiler_arrow_stroke_width: 2
+    stream_label_font_size: 21
+    stream_label_y_offset: 4.4
+
+  # Lexer`s scene
+  lexer_scene:
+    title_y_offset: 6.0
+    buffer_width: 6.2
+    buffer_height: 1.45
+    buffer_corner_radius: 0.15
+    buffer_stroke_width: 2
+    buffer_fill_opacity: 0.04
+    buffer_y_offset: 3.9
+    buffer_label_font_size: 20
+    buffer_label_buff: 0.16
+    buffer_value_font_size: 31
+    buffer_value_y_offset: 0.13
+    rail_length: 3.4
+    rail_y_offset_upper: 1.0
+    rail_y_offset_lower: 0.15
+    rail_stroke_width: 5
+    scanner_line_y_start: 2.1
+    scanner_line_y_end: 0.7
+    scanner_line_stroke_width: 4
+    scanner_label_font_size: 20
+    scanner_label_buff: 0.12
+    status_font_size: 24
+    status_y_offset: 1.05
+    output_label_font_size: 18
+    output_label_y_offset: 1.85
+    output_grid_cols: 3
+    output_grid_rows: 4
+    output_x_positions: [-2.15, 0, 2.15]
+    output_y_positions: [0.9, 0, -0.9, -1.8]
+    output_y_offset: 3.8
+    scanner_height: 0.68
+    scanner_font_size: 18
+
+  # Scanning animation
+  scanning:
+    scan_duration_detailed: 0.32
+    scan_duration_simple: 0.1
+    token_complete_duration_detailed: 0.4
+    token_complete_duration_simple: 0.2
+    transform_duration_detailed: 0.7
+    transform_duration_simple: 0.25
+    move_duration_detailed: 0.55
+    move_duration_simple: 0.22
+    boundary_dash_length: 0.07
+    boundary_stroke_width: 2
+    boundary_label_font_size: 13
+    boundary_label_buff: 0.1
+    boundary_duration: 0.65
+    boundary_fade_duration: 0.3
+    flash_radius: 0.35
+    flash_line_length: 0.1
+
+  # Token scene
+  token_stream:
+    title_y_offset: 6.0
+    before_label_y_offset: 4.6
+    before_label_font_size: 16
+    before_stream_y_offset: 3.9
+    before_stream_font_size: 18
+    arrow_y_start: 3.1
+    arrow_y_end: 2.0
+    arrow_stroke_width: 3
+    after_label_y_offset: 1.55
+    after_label_font_size: 16
+    final_height: 0.8
+    final_font_size: 18
+    final_grid_rows: 4
+    final_grid_cols: 3
+    final_grid_buff_x: 0.2
+    final_grid_buff_y: 0.25
+    final_grid_y_offset: 1.2
+    summary_font_size: 24
+    summary_buff: 0.5
+    summary_duration: 0.9
+    lag_ratio: 0.06
+    token_stream_duration: 2.4
+
+  # Symbol table
+  symbol_table:
+    table_width: 6.4
+    table_height: 2.45
+    table_corner_radius: 0.14
+    table_stroke_width: 2
+    table_fill_opacity: 0.04
+    table_y_offset: 5.35
+    table_title_font_size: 18
+    table_title_buff: 0.2
+    row_width: 2.75
+    row_height: 0.64
+    row_corner_radius: 0.07
+    row_stroke_width: 1
+    row_fill_opacity: 0.08
+    row_name_font_size: 16
+    row_category_font_size: 11
+    row_buff: 0.03
+    row_grid_rows: 2
+    row_grid_cols: 2
+    row_grid_buff_x: 0.28
+    row_grid_buff_y: 0.22
+    row_title_buff: 0.25
+    arrow_max_tip_length_ratio: 0.1
+    arrow_buff: 0.1
+    arrow_stroke_width: 2
+    symbol_animation_duration: 0.42
+    symbol_fade_duration: 0.16
+    table_fade_duration: 0.8
+    identifier_indices: [1, 3, 5, 7]
+
+  # Parser
+  parser:
+    title_y_offset: 6.0
+    question_y_offset: 4.1
+    question_font_size: 28
+    question_line_spacing: 1.1
+    arrow_y_start: 2.9
+    arrow_y_end: 1.9
+    arrow_stroke_width: 3
+    ast_center_y_offset: 0.6
+    ast_radius_default: 0.43
+    ast_radius_result: 0.45
+    ast_font_size_default: 19
+    ast_font_size_result: 15
+    ast_stroke_width: 2
+    ast_fill_opacity: 0.08
+    ast_edge_stroke_width: 2
+    ast_edge_shorten: 0.85
+    ast_positions:
+      "=": [0, 2.7]
+      "result": [-1.8, 1.3]
+      "max": [1.5, 1.3]
+      "+": [0.6, -0.3]
+      "42": [2.4, -0.3]
+      "a": [0.05, -2.0]
+      "b": [1.15, -2.0]
+    ast_edges:
+      - ["=", "result"]
+      - ["=", "max"]
+      - ["max", "+"]
+      - ["max", "42"]
+      - ["+", "a"]
+      - ["+", "b"]
+    final_caption_y_offset: 5.0
+    final_caption_font_size: 28
+    next_video_font_size: 18
+    next_video_buff: 0.2
+    edge_lag_ratio: 0.08
+    node_lag_ratio: 0.1
+    edge_duration: 1.2
+    node_duration: 1.4
+    final_duration: 1.0
+
+  # Tokens for lexer
+  tokens:
+    - lexeme: "int"
+      token_type: "KEYWORD"
+    - lexeme: "result"
+      token_type: "IDENTIFIER"
+    - lexeme: "="
+      token_type: "OPERATOR"
+    - lexeme: "max"
+      token_type: "IDENTIFIER"
+    - lexeme: "("
+      token_type: "PAREN"
+    - lexeme: "a"
+      token_type: "IDENTIFIER"
+    - lexeme: "+"
+      token_type: "OPERATOR"
+    - lexeme: "b"
+      token_type: "IDENTIFIER"
+    - lexeme: ","
+      token_type: "SEPARATOR"
+    - lexeme: "42"
+      token_type: "NUMBER"
+    - lexeme: ")"
+      token_type: "PAREN"
+    - lexeme: ";"
+      token_type: "TERMINATOR"

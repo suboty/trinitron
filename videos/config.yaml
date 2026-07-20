@@ -1,0 +1,50 @@
+video:
+  pixel_width: 1080
+  pixel_height: 1920
+  frame_width: 8
+  frame_height_ratio: 16
+  frame_rate: 60
+
+colors:
+  background: "#EEF5FC"
+  text: "#1F2933"
+  muted: "#5CA4A7"
+  border: "#CCB494"
+  belt: "#E8DDCC"
+  keyword: "#076465"
+  identifier: "#ED9954"
+  operator: "#5CA4A7"
+  number: "#F4AC5C"
+  punctuation: "#52472E"
+
+character_cell:
+  default_width: 0.22
+  default_height: 0.48
+  corner_radius: 0.04
+  stroke_width: 1.2
+  font_size: 15
+  highlight_stroke_width: 2.2
+  consumed_opacity: 0.18
+  consumed_glyph_opacity: 0.2
+  cell_buff: 0.015
+  stream_width: 6.65
+
+token_card:
+  default_width: 1.95
+  default_height: 0.76
+  font_size: 15
+  corner_radius: 0.1
+  stroke_width: 2
+  fill_opacity: 0.07
+  type_label_font_size_offset: 3
+  labels_buff: 0.04
+
+station_title:
+  number_font_size: 34
+  title_font_size: 34
+  subtitle_font_size: 24
+  heading_buff: 0.18
+  content_buff: 0.11
+  underline_stroke_width: 3
+  underline_buff: 0.14
+  max_underline_width: 6.6

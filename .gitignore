@@ -92,3 +92,9 @@ Desktop.ini
 *.tmp
 *.temp
 *.cache
+
+# ==========
+# rendered videos
+# ==========
+
+videos/rendered/*.mp4
