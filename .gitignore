@@ -19,47 +19,6 @@ build/
 .ipynb_checkpoints/
 
 # ==========
-# LaTeX / XeLaTeX
-# ==========
-
-*.aux
-*.log
-*.out
-*.toc
-*.lof
-*.lot
-*.bbl
-*.blg
-*.brf
-*.fls
-*.fdb_latexmk
-*.synctex.gz
-*.synctex(busy)
-*.xdv
-*.bcf
-*.run.xml
-*.pdf
-!examples/
-!examples/*.pdf
-
-# ==========
-# Graphviz
-# ==========
-
-*.png
-*.svg
-*.eps
-*.ps
-*.dot
-*.tex
-!examples/*.png
-!examples/*.svg
-!examples/*.eps
-!examples/*.ps
-!examples/*.dot
-!examples/*.tex
-
-# ==========
 # Bash
 # ==========
 

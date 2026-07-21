@@ -1,0 +1,121 @@
+test:
+  # Camera positions and movement
+  camera:
+    scene_1_y: 1.2
+    scene_2_y: -14.8
+    move_duration: 2.8
+    initial_wait_duration: 1.5
+    final_wait_duration: 2.0
+    frame_width: 8.0
+    frame_height: 14.222
+
+  # Horizontal content boundaries relative to the camera center
+  content:
+    left: -3.35
+    right: 2.35
+
+  # Station title area
+  title_zone:
+    top: 6.20
+    bottom: 4.45
+    color: "#00BBF9"
+    fill_opacity: 0.18
+    stroke_width: 2
+    corner_radius: 0.12
+
+    label:
+      text: "1  STATION TITLE"
+      font: "Menlo"
+      font_size: 13
+      color: "#00BBF9"
+      offset_x: 0.12
+      offset_y: -0.12
+
+    station_title:
+      subtitle: "StationTitle area"
+
+  # Main animation area
+  animation_zone:
+    top: 4.15
+    bottom: -1.85
+    color: "#00F5D4"
+    fill_opacity: 0.14
+    stroke_width: 2
+    corner_radius: 0.12
+
+    label:
+      text: "2  ANIMATION"
+      font: "Menlo"
+      font_size: 13
+      color: "#00A896"
+      offset_x: 0.12
+      offset_y: -0.12
+
+    content:
+      text: "MAIN ANIMATION AREA"
+      font: "Menlo"
+      font_size: 27
+      color: "#5CA4A7"
+
+  # Explanatory text area
+  text_zone:
+    top: -2.10
+    bottom: -3.45
+    color: "#FEE440"
+    fill_opacity: 0.20
+    stroke_width: 2
+    corner_radius: 0.12
+
+    label:
+      text: "3  TEXT"
+      font: "Menlo"
+      font_size: 13
+      color: "#C49A00"
+      offset_x: 0.12
+      offset_y: -0.12
+
+    content:
+      text: "Short explanation or key idea"
+      font: "Menlo"
+      font_size: 18
+      color: "#1F2933"
+
+  # Reserved subtitle area
+  subtitles_zone:
+    top: -3.70
+    bottom: -5.05
+    color: "#F15BB5"
+    fill_opacity: 0.20
+    stroke_width: 2
+    corner_radius: 0.12
+
+    label:
+      text: "4  SUBTITLES — RESERVED"
+      font: "Menlo"
+      font_size: 13
+      color: "#D14B91"
+      offset_x: 0.12
+      offset_y: -0.12
+
+    content:
+      text: "Subtitles appear only in this area"
+      font: "Menlo"
+      font_size: 17
+      color: "#1F2933"
+
+  # Full camera frame outline
+  frame:
+    stroke_color: "#CCB494"
+    stroke_width: 2
+
+  # Test scene definitions
+  scenes:
+    - number: "01"
+      name: "SCENE 1"
+      camera_position: "scene_1_y"
+      color: "#076465"
+
+    - number: "02"
+      name: "SCENE 2"
+      camera_position: "scene_2_y"
+      color: "#5CA4A7"
