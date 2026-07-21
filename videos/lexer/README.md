@@ -2,6 +2,8 @@
 
 This directory contains the source code for the **Lexical Analysis** episode.
 
+Source code of this animation is in **scene.py** file.
+
 ## What is lexical analysis?
 
 Lexical analysis is the first stage of compilation. 
