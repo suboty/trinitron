@@ -1,6 +1,7 @@
 # Animation Layout
 
-This directory contains a visual layout template used for all animations in the project.
+This directory contains a visual layout template used for all animations in the project 
+(except for the episode about lexical analysis).
 
 The template defines how content is organized inside a vertical video frame and ensures that every scene follows the same visual structure.
 
