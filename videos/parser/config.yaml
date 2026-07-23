@@ -1,0 +1,222 @@
+parser:
+  source_code: "int result = max(a + b, 42);"
+
+  camera:
+    tokens_y: 0.0
+    rules_y: -16.0
+    tree_y: -32.0
+    final_y: -48.0
+    move_duration: 1.3
+    frame_width: 8.0
+
+  layout:
+    content_left: -3.35
+    content_right: 2.35
+    content_offset_x: -0.42
+
+    title_top: 6.20
+    title_bottom: 4.45
+    title_offset_x: 0.35
+
+    animation_top: 4.15
+    animation_bottom: -1.85
+
+    text_top: -2.10
+    text_bottom: -3.45
+
+    subtitles_top: -3.70
+    subtitles_bottom: -5.05
+
+  typography:
+    font: "Menlo"
+
+  timing:
+    title_fade: 0.55
+    content_fade: 0.55
+    text_change: 0.5
+    subtitle_change: 0.5
+    station_fade: 0.45
+    normal_pause: 0.60
+    token_grid: 1.25
+    status_change: 0.35
+    final_hold: 1.8
+
+  stations:
+    tokens:
+      number: "01"
+      name: "TOKEN STREAM"
+      description: "The parser receives tokens"
+      color: "#52472E"
+
+    rules:
+      number: "02"
+      name: "RECURSIVE DESCENT"
+      description: "Grammar rules call one another"
+      color: "#076465"
+
+    tree:
+      number: "03"
+      name: "RETURNING SUBTREES"
+      description: "Recursive calls build the AST"
+      color: "#5CA4A7"
+
+    final:
+      number: "04"
+      name: "AST"
+      description: "The structure returned"
+      color: "#52472E"
+
+  token_station:
+    source_y: 3.25
+    source_font_size: 24
+    source_max_width: 5.35
+
+    arrow_start_y: 2.65
+    arrow_end_y: 1.95
+    arrow_stroke_width: 3
+
+    label_y: 1.62
+    label_font_size: 16
+
+    grid_y: -0.10
+    grid_rows: 3
+    grid_cols: 4
+    grid_buff_x: 0.10
+    grid_buff_y: 0.14
+
+    card_width: 1.24
+    card_height: 0.61
+    card_font_size: 13
+    token_lag_ratio: 0.06
+
+  rules_station:
+    token_rows_y: 3.10
+    first_row_count: 6
+    token_width: 1.1
+    token_height: 0.61
+    token_font_size: 12
+    token_buff_x: 0.07
+    token_buff_y: 0.17
+
+    cursor_size: 0.10
+    cursor_buff: 0.07
+
+    rules_label_y: 1.55
+    rules_label_font_size: 15
+
+    rules_anchor_x: -3
+    rules_anchor_y: 0.85
+
+    rule_height: 0.46
+    rule_corner_radius: 0.08
+    rule_font_size: 11
+    rule_padding_x: 0.18
+    rule_buff: 0.07
+    rule_stroke_width: 2
+    rule_fill_opacity: 0.4
+
+    status_y: -0.75
+    status_font_size: 16
+
+  scanning:
+    move_duration: 0.5
+    indicate_duration: 0.3
+    pause: 0.4
+    scale_factor: 1.04
+
+  recursion:
+    enter_duration: 0.6
+    inactive_opacity: 0.7
+
+  tree_station:
+    rule_path_y: 3.55
+    rule_path_font_size: 16
+    rule_path_max_width: 5.35
+
+    status_y: 2.85
+    status_font_size: 16
+
+    ast_center_y: 0.25
+
+    reveal_lag_ratio: 0.10
+    reveal_duration: 0.85
+
+  final_station:
+    tree_y: 0.85
+    tree_scale: 1.03
+    tree_transform_duration: 1.25
+
+  ast:
+    node_radius_default: 0.31
+    node_radius_small: 0.27
+    node_radius_result: 0.35
+    node_radius_decl: 0.35
+
+    font_size_default: 15
+    font_size_small: 13
+    font_size_result: 11
+    font_size_decl: 13
+
+    stroke_width: 2.1
+    fill_opacity: 0.10
+    edge_stroke_width: 2.5
+    edge_shorten: 0.64
+
+    positions:
+      DECL: [0.0, 1.55]
+      int: [-1.45, 0.55]
+      "=": [0.55, 0.55]
+      result: [-0.50, -0.50]
+      CALL: [1.25, -0.50]
+      max: [0.45, -1.55]
+      "+": [1.35, -1.55]
+      "42": [2.12, -1.55]
+      a: [1.00, -2.55]
+      b: [1.70, -2.55]
+
+    edges:
+      - [DECL, int]
+      - [DECL, "="]
+      - ["=", result]
+      - ["=", CALL]
+      - [CALL, max]
+      - [CALL, "+"]
+      - [CALL, "42"]
+      - ["+", a]
+      - ["+", b]
+
+  text_area:
+    font_size: 30
+    line_spacing: 1.05
+    max_width: 5.30
+    lines:
+      tokens: "The parser works with token types,\nnot individual characters."
+      rules: "Each active grammar rule waits for\na smaller rule to return."
+      tree: "On success, return a node or subtree."
+      final: "The AST preserves structure\nand removes unnecessary punctuation."
+
+  subtitles:
+    font_size: 30
+    line_spacing: 1.05
+    max_width: 5.25
+    lines:
+      tokens_input: "Lexical analysis gives\nthe parser a stream of tokens."
+      rules_start: "The parser reads the tokens\nand enters the matching grammar rules."
+      rules_nested: "A recursive rule can pause\nwhile another rule parses\na smaller structure."
+      tree_return: "When a rule succeeds,\nit returns a node \nor an entire subtree."
+      tree_complete: "Those returned subtrees are connected\ninto one syntax tree."
+      final: "The result is an abstract syntax tree\nthat represents\nthe program's structure."
+
+  tokens:
+    - {lexeme: "int", token_type: "KEYWORD"}
+    - {lexeme: "result", token_type: "IDENTIFIER"}
+    - {lexeme: "=", token_type: "OPERATOR"}
+    - {lexeme: "max", token_type: "IDENTIFIER"}
+    - {lexeme: "(", token_type: "PAREN"}
+    - {lexeme: "a", token_type: "IDENTIFIER"}
+    - {lexeme: "+", token_type: "OPERATOR"}
+    - {lexeme: "b", token_type: "IDENTIFIER"}
+    - {lexeme: ",", token_type: "SEPARATOR"}
+    - {lexeme: "42", token_type: "NUMBER"}
+    - {lexeme: ")", token_type: "PAREN"}
+    - {lexeme: ";", token_type: "TERMINATOR"}
