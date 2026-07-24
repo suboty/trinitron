@@ -56,10 +56,10 @@ Desktop.ini
 # rendered videos
 # ==========
 
-videos/rendered/*.mp4
-videos/rendered/images/*
-videos/rendered/texts/*
-videos/rendered/videos/*
+videos/_rendered/*.mp4
+videos/_rendered/images/*
+videos/_rendered/texts/*
+videos/_rendered/videos/*
 
 
 # ==========

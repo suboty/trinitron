@@ -2,7 +2,7 @@
 
 This directory contains the source code for the **Lexical Analysis** episode.
 
-Source code of this animation is in **scene.py** file.
+Source code of this animation is in **episode.py** file.
 
 ## What is lexical analysis?
 

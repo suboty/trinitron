@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing import Any
 
-from common import *
+from _base_animation.common import *
 
 
 def load_scene_config(

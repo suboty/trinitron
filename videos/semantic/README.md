@@ -2,6 +2,8 @@
 
 This directory contains the source code for the **Semantic Analysis** episode.
 
+Source code of this animation is in **episode.py** file.
+
 ## What is semantic analysis?
 
 Semantic analysis is the compilation stage that gives meaning to the abstract syntax tree produced by the parser.

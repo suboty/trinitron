@@ -2,6 +2,8 @@
 
 This directory contains the source code for the **Syntax Analysis** episode.
 
+Source code of this animation is in **episode.py** file.
+
 ## What is syntax analysis?
 
 Syntax analysis is the second stage of compilation.

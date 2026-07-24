@@ -1,7 +1,6 @@
 from dataclasses import dataclass
-from typing import Any
 
-from common import *
+from _base_animation.common import *
 
 
 def load_scene_config(
@@ -22,7 +21,7 @@ class SymbolSpec:
     scope: str
 
 
-class SemanticAnimation(MovingCameraScene):
+class SemanticAnimation(BaseAnimation):
     def __init__(
         self,
         camera_class: type[Camera] = MovingCamera,
@@ -68,149 +67,6 @@ class SemanticAnimation(MovingCameraScene):
 
         self.wait(self.config["timing"]["final_hold"])
 
-    # General geometry of the four zones
-
-    def station_center(self, camera_key: str) -> np.ndarray:
-        """
-            The center of the station is vertical.
-            Each station is lower than the previous one.
-        """
-        return UP * self.config["camera"][camera_key]
-
-    def zone_center(
-            self,
-            station_center: np.ndarray,
-            top_key: str,
-            bottom_key: str,
-    ) -> np.ndarray:
-        """
-            Returns the center of a specific zone relative to the station center.
-        """
-        layout = self.config["layout"]
-
-        center_x = (layout["content_left"] + layout["content_right"]) / 2
-        center_x += layout["content_offset_x"]
-
-        center_y = (layout[top_key] + layout[bottom_key]) / 2
-
-        return station_center + RIGHT * center_x + UP * center_y
-
-    def create_station_title(
-            self,
-            station_key: str,
-            center: np.ndarray,
-    ) -> StationTitle:
-        station = self.config["stations"][station_key]
-
-        title = StationTitle(
-            station["number"],
-            station["name"],
-            station["description"],
-            station["color"],
-        )
-
-        title.move_to(
-            self.zone_center(
-                center,
-                "title_top",
-                "title_bottom",
-            )
-            + RIGHT * self.config["layout"]["title_offset_x"]
-        )
-
-        return title
-
-    def create_text(
-            self,
-            text: str,
-            center: np.ndarray,
-            font_size: int,
-            color: str = TEXT_COLOR,  # noqa
-            line_spacing: float | None = None,
-    ) -> Text:
-        kwargs: dict[str, Any] = {
-            "text": text,
-            "font": self.config["typography"]["font"],
-            "font_size": font_size,
-            "color": color,
-        }
-
-        if line_spacing is not None:
-            kwargs["line_spacing"] = line_spacing
-
-        return Text(**kwargs).move_to(center)
-
-    def set_explanation(self, key: str, center: np.ndarray) -> None:
-        """
-            Shows a short thought only inside the Text Area.
-        """
-        cfg = self.config["text_area"]
-        new_text = self.create_text(
-            cfg["lines"][key],
-            self.zone_center(center, "text_top", "text_bottom"),
-            cfg["font_size"],
-            MUTED_COLOR,
-            cfg["line_spacing"],
-        )
-        new_text.scale_to_fit_width(cfg["max_width"])
-
-        if self.explanation is None:
-            self.explanation = new_text
-            self.play(FadeIn(new_text), run_time=self.config["timing"]["text_change"])
-            return
-
-        self.play(
-            ReplacementTransform(self.explanation, new_text),
-            run_time=self.config["timing"]["text_change"],
-        )
-        self.explanation = new_text
-
-    def set_subtitle(self, key: str, center: np.ndarray) -> None:
-        """
-            Shows the replica only inside the Subtitle Area.
-        """
-        cfg = self.config["subtitles"]
-        new_text = self.create_text(
-            cfg["lines"][key],
-            self.zone_center(center, "subtitles_top", "subtitles_bottom"),
-            cfg["font_size"],
-            TEXT_COLOR,
-            cfg["line_spacing"],
-        )
-        new_text.scale_to_fit_width(cfg["max_width"])
-
-        if self.subtitle is None:
-            self.subtitle = new_text
-            self.play(FadeIn(new_text), run_time=self.config["timing"]["subtitle_change"])
-            return
-
-        self.play(
-            ReplacementTransform(self.subtitle, new_text),
-            run_time=self.config["timing"]["subtitle_change"],
-        )
-        self.subtitle = new_text
-
-    def clear_station_text(self) -> None:
-        animations: list[Animation] = []
-
-        if self.subtitle is not None:
-            animations.append(FadeOut(self.subtitle))
-            self.subtitle = None
-
-        if self.explanation is not None:
-            animations.append(FadeOut(self.explanation))
-            self.explanation = None
-
-        if animations:
-            self.play(*animations, run_time=self.config["timing"]["station_fade"])
-
-    def move_to_station(self, camera_key: str) -> None:
-        self.clear_station_text()
-        self.play(
-            self.camera.frame.animate.move_to(self.station_center(camera_key)),  # noqa
-            run_time=self.config["camera"]["move_duration"],
-            rate_func=smooth,
-        )
     # Station 01. The finished AST is sent for semantic analysis
 
     def animate_ast_station(self) -> None:

@@ -2,7 +2,7 @@ install:
 	poetry install --no-root
 	chmod +x scripts/clean_manim_output.sh
 
-MEDIA_DIR=videos/rendered
+MEDIA_DIR=videos/_rendered
 
 
 # TEST
