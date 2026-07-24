@@ -24,3 +24,8 @@ parser-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
 		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/parser/episode.py ParserAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) ParserAnimation
+
+semantic-episode-build:
+	PYTHONPATH=$(shell pwd)/videos \
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/semantic/episode.py SemanticAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimation

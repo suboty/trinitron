@@ -1,0 +1,265 @@
+semantic:
+  camera:
+    ast_y: 0.0
+    symbols_y: -16.0
+    types_y: -32.0
+    final_y: -48.0
+    move_duration: 1.6
+    frame_width: 8.0
+
+  layout:
+    content_left: -3.35
+    content_right: 2.35
+
+    content_offset_x: -0.42
+
+    title_top: 6.20
+    title_bottom: 4.45
+
+    title_offset_x: 0.35
+
+    animation_top: 4.15
+    animation_bottom: -1.85
+
+    text_top: -3
+    text_bottom: -4
+
+    subtitles_top: -4.30
+    subtitles_bottom: -5
+
+  typography:
+    font: "Menlo"
+
+  timing:
+    title_fade: 0.55
+    content_fade: 0.55
+    text_change: 0.50
+    subtitle_change: 0.50
+    station_fade: 0.45
+    normal_pause: 0.70
+    final_hold: 1.80
+
+  style:
+    badge_corner_radius: 0.09
+    badge_stroke_width: 2.0
+    badge_fill_opacity: 0.09
+
+  stations:
+    ast:
+      number: "01"
+      name: "AST"
+      description: "Semantic analysis starts"
+      color: "#52472E"
+
+    symbols:
+      number: "02"
+      name: "SYMBOL TABLE"
+      description: "Declarations and identifiers"
+      color: "#076465"
+
+    types:
+      number: "03"
+      name: "TYPE CHECKING"
+      description: "Types flow upward"
+      color: "#5CA4A7"
+
+    final:
+      number: "04"
+      name: "SEMANTIC RESULT"
+      description: "Meaningful and consistent"
+      color: "#52472E"
+
+  ast_station:
+    tree_x: -0.42
+    tree_y: 1.25
+    tree_scale: 0.95
+
+    parser_label_y: 3.70
+    parser_label_font_size: 15
+
+    analyzer_y: -2
+    analyzer_width: 3.25
+    analyzer_height: 0.68
+    analyzer_corner_radius: 0.10
+    analyzer_stroke_width: 2.2
+    analyzer_fill_opacity: 0.08
+    analyzer_font_size: 16
+
+    arrow_start_y: -0.35
+    arrow_end_y: -0.88
+    arrow_stroke_width: 3.0
+
+  symbol_station:
+    tree_x: -1.73
+    tree_y: 0.83
+    tree_scale: 0.60
+
+    table_x: 1.28
+    table_y: 0.72
+
+    traversal_x: -1.75
+    traversal_y: 3.58
+    traversal_font_size: 14
+
+    status_y: -2
+    status_font_size: 16
+
+    step_duration: 0.8
+    row_duration: 0.8
+    indicate_duration: 0.6
+
+    resolved_badge_y: -2.7
+    resolved_badge_width: 2.65
+    resolved_badge_height: 0.56
+    resolved_badge_font_size: 14
+
+  symbol_table:
+    width: 3.35
+    height: 4.45
+    corner_radius: 0.12
+    stroke_width: 2.0
+    fill_opacity: 0.035
+
+    title_y_offset: 1.88
+    title_font_size: 15
+
+    header_y_offset: 1.25
+
+    row_gap: 0.10
+    row_height: 0.48
+    row_corner_radius: 0.06
+    row_stroke_width: 1.2
+    row_fill_opacity: 0.035
+    header_fill_opacity: 0.09
+
+    header_font_size: 10
+    row_font_size: 10
+
+    column_widths: [0.82, 0.82, 0.70, 0.72]
+
+  type_station:
+    tree_x: -0.9
+    tree_y: 0.62
+    tree_scale: 0.85
+
+    status_y: 3
+    status_font_size: 16
+
+    badge_buff: 0.2
+    operator_badge_buff: 1.5
+    type_step_duration: 0.8
+    badge_buff_42: 0.2
+
+    rule_x: 1.70
+    rule_y: 1.35
+    rule_width: 2.75
+    rule_height: 0.68
+    rule_corner_radius: 0.09
+    rule_stroke_width: 2.0
+    rule_fill_opacity: 0.07
+    rule_font_size: 20
+
+    assignment_badge_y: -2.5
+    assignment_badge_width: 2.6
+    assignment_badge_height: 0.58
+    assignment_badge_font_size: 13
+
+  type_badge:
+    width: 0.55
+    height: 0.4
+    font_size: 8
+
+  final_station:
+    tree_x: -1.40
+    tree_y: 0.76
+    tree_scale: 0.85
+    tree_fade: 0.80
+
+    checks_x: 0.42
+    checks_y: 1.02
+    check_gap: 0.34
+    check_mark_font_size: 22
+    check_font_size: 14
+    check_text_buff: 0.16
+    check_lag_ratio: 0.18
+    checks_duration: 2
+
+    checks:
+      - "Symbols resolved"
+      - "Types checked"
+      - "Function call verified"
+      - "Assignment validated"
+
+    ready_text: "READY FOR IR"
+    ready_y: -2
+    ready_width: 2.55
+    ready_height: 0.62
+    ready_font_size: 15
+
+  ast:
+    node_radius_default: 0.31
+    node_radius_small: 0.27
+    node_radius_result: 0.37
+    node_radius_decl: 0.35
+
+    font_size_default: 15
+    font_size_small: 13
+    font_size_result: 11
+    font_size_decl: 13
+
+    stroke_width: 2.1
+    fill_opacity: 0.10
+    edge_stroke_width: 2.5
+    edge_shorten: 0.64
+
+    positions:
+      DECL: [0.0, 1.55]
+      int: [-1.45, 0.55]
+      "=": [0.55, 0.55]
+      result: [-0.50, -0.50]
+      CALL: [1.25, -0.50]
+      max: [0.45, -1.55]
+      "+": [1.35, -1.55]
+      "42": [2.12, -1.55]
+      a: [1.00, -2.55]
+      b: [1.70, -2.55]
+
+    edges:
+      - [DECL, int]
+      - [DECL, "="]
+      - ["=", result]
+      - ["=", CALL]
+      - [CALL, max]
+      - [CALL, "+"]
+      - [CALL, "42"]
+      - ["+", a]
+      - ["+", b]
+
+  text_area:
+    font_size: 30
+    line_spacing: 1.05
+    max_width: 5.30
+    lines:
+      ast: "Syntax describes structure.\nSemantics assigns meaning."
+      symbols: "Declarations create symbols.\nEvery identifier must resolve to one."
+      types: "Type rules are evaluated\nfrom leaves toward the root."
+      final: "The compiler now knows what\nevery relevant node means."
+
+  subtitles:
+    font_size: 30
+    line_spacing: 1.05
+    max_width: 5.25
+    lines:
+      ast_input: "The parser has already built\nan abstract syntax tree."
+      meaning_question: "But correct structure does not guarantee\nthat the program makes sense."
+      symbol_start: "Semantic analysis walks the tree\nand records every declaration."
+      symbol_lookup: "Then each identifier is resolved\nthrough the symbol table."
+      types_start: "Next, the compiler determines\nthe type of every expression."
+      call_check: "Function arguments must match\nthe function's declared signature."
+      final: "Now the program is structurally correct\nand semantically valid."
+
+  symbols:
+    - {name: "result", kind: "variable", data_type: "int", scope: "local"}
+    - {name: "max", kind: "function", data_type: "int", scope: "global"}
+    - {name: "a", kind: "variable", data_type: "int", scope: "local"}
+    - {name: "b", kind: "variable", data_type: "int", scope: "local"}
