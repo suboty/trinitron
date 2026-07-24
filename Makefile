@@ -29,3 +29,8 @@ semantic-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
 		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/semantic/episode.py SemanticAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimation
+
+frontend-episode-build:
+	PYTHONPATH=$(shell pwd)/videos \
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/frontend/episode.py FrontendAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) FrontendAnimation
