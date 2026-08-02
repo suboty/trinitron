@@ -310,7 +310,7 @@ class TextInRoundedRectangle(TextInSomething):
             text: List[str] | str,
             text_font_size: List[float | int] | float | int,
             text_color: List[ManimColor | str] | ManimColor | str,
-            figure_color: ManimColor | str,
+            figure_color: ManimColor | str, # noqa
             box_width: float | int,
             box_height: float | int,
             corner_radius: float | int = DEFAULT_CORNER_RADIUS,
@@ -351,7 +351,7 @@ class TextInEllipse(TextInSomething):
             text: List[str] | str,
             text_font_size: List[float | int] | float | int,
             text_color: List[ManimColor | str] | ManimColor | str,
-            figure_color: ManimColor | str,
+            figure_color: ManimColor | str, # noqa
             ellipse_width: float | int,
             ellipse_height: float | int,
             shift_direction: str | None = None,

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from dataclasses import dataclass
 from enum import Enum
 
@@ -26,4 +26,17 @@ class FigureTypesForText(Enum):
     box = "box"
     circle = "circle"
     rounded = "rounded"
-    ellipse = 'ellipse'
+    ellipse = "ellipse"
+
+
+@dataclass
+class NodeData:
+    name: str
+    pos_x: float = None
+    pos_y: float = None
+
+
+@dataclass
+class GraphData:
+    nodes: List[NodeData]
+    edges: List[Tuple[int, int]]

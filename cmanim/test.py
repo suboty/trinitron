@@ -11,6 +11,7 @@ from src.text import (
 from src.objects import VerticalSteps, TextStep, HorizontalSteps, Conveyor
 from src.entities import FigureTypesForText
 from src.table import Table, TableCell
+from src.graph import Graph
 
 
 class TestScene(Scene):
@@ -221,6 +222,26 @@ class TestScene(Scene):
         self.wait(0.5)
 
         table.animate_out(self, run_time=0.8)
+
+        graph = Graph(
+            nodes=["A", "B", "C", "D", "E"],
+            edges=[(0, 1), (1, 2), (2, 3), (3, 4), (4, 0), (0, 2)],
+            node_color=BLUE,
+            node_radius=0.4,
+            edge_color=WHITE,
+            shape=FigureTypesForText.circle,
+            max_iterations=100,
+        ).create()
+
+        graph.animate_in(self, run_time=2, lag_ratio=0.1)
+        self.wait(1)
+
+        graph.highlight_node(0, YELLOW, self)
+        self.wait(0.5)
+        graph.highlight_edge(0, RED, self)
+        self.wait(1)
+
+        graph.animate_out(self, run_time=1)
 
         exp_top.animate_out(self, run_time=2)
         exp_down.animate_out(self, run_time=2)
