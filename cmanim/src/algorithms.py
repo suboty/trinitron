@@ -2,8 +2,15 @@ import math
 import random
 from collections import deque
 from typing import List, Tuple, Callable
+from dataclasses import dataclass
 
 from .entities import GraphData, NodeData
+
+
+@dataclass
+class InitSchemaTypes:
+    random = 'random'
+    zeros = 'zeros'
 
 
 class KamadaKawaiAlgorithm:
@@ -14,6 +21,7 @@ class KamadaKawaiAlgorithm:
             height_range: Tuple[float, float],
             epsilon: float = 0.001,
             max_iterations: int = 1000,
+            init_schema: InitSchemaTypes = InitSchemaTypes.zeros
     ):
         self.graph = graph
         self.min_width, self.max_width = width_range
@@ -29,9 +37,15 @@ class KamadaKawaiAlgorithm:
         self.k = []
         self.get_distance_and_spring_strength()
 
-        for node in self.graph.nodes:
-            node.pos_x = random.uniform(self.min_width, self.max_width)
-            node.pos_y = random.uniform(self.min_height, self.max_height)
+        match init_schema:
+            case 'random':
+                for node in self.graph.nodes:
+                    node.pos_x = random.uniform(self.min_width, self.max_width)
+                    node.pos_y = random.uniform(self.min_height, self.max_height)
+            case 'zeros':
+                for node in self.graph.nodes:
+                    node.pos_x = random.uniform(-0.1, 0.1)
+                    node.pos_y = random.uniform(-0.1, 0.1)
 
     def all_pairs_shortest_path(self) -> List[List[float]]:
         n = len(self.graph.nodes)
