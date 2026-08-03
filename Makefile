@@ -17,20 +17,20 @@ test-episode-build:
 
 lexer-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/lexer/episode.py LexerAnimation
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/lexer/episode.py LexerAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) LexerAnimation
 
 parser-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/parser/episode.py ParserAnimation
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/parser/episode.py ParserAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) ParserAnimation
 
 semantic-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/semantic/episode.py SemanticAnimation
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/semantic/episode.py SemanticAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimation
 
 frontend-episode-build:
 	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/frontend/episode.py FrontendAnimation
+		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/frontend/episode.py FrontendAnimation
 	./scripts/clean_manim_output.sh $(MEDIA_DIR) FrontendAnimation

@@ -4,7 +4,7 @@ from _base_animation.common import *
 
 
 def load_scene_config(
-    config_path: str = Path("videos", "parser", "config.yaml"),
+    config_path: str = Path("videos", "compilers", "parser", "config.yaml"),
 ) -> dict:
     with open(config_path, "r", encoding="utf-8") as file:
         return yaml.safe_load(file)["parser"]

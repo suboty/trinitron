@@ -2,7 +2,7 @@ from _base_animation.common import *
 
 
 def load_scene_config(
-    config_path: str = Path("videos", "frontend", "config.yaml"),
+    config_path: str = Path("videos", "compilers", "frontend", "config.yaml"),
 ) -> dict:
     with open(config_path, "r", encoding="utf-8") as file:
         return yaml.safe_load(file)["frontend"]
