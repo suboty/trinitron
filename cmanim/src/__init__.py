@@ -1,4 +1,10 @@
-from .base import ObjectBase, SceneBase
+from .base import (
+    ObjectBase,
+    SceneBase,
+    SceneFormat,
+    FadeIn,
+    FadeOut,
+)
 from .colors import PALETTES
 from .entities import TextStep, TableCell, FigureTypesForText
 from .text import (
@@ -31,4 +37,7 @@ __all__ = [
     'Conveyor',
     'Table',
     'PALETTES',
+    'SceneFormat',
+    'FadeIn',
+    'FadeOut',
 ]

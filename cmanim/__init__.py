@@ -1,0 +1,24 @@
+from .src import *
+
+__all__ = [
+    'ObjectBase',
+    'SceneBase',
+    'SceneFormat',
+    'TextStep',
+    'TableCell',
+    'FigureTypesForText',
+    'Title',
+    'Exploration',
+    'TextInSomething',
+    'TextInBox',
+    'TextInCircle',
+    'TextInRoundedRectangle',
+    'TextInEllipse',
+    'VerticalSteps',
+    'HorizontalSteps',
+    'Conveyor',
+    'Table',
+    'PALETTES',
+    'FadeIn',
+    'FadeOut',
+]
