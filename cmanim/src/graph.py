@@ -84,8 +84,8 @@ class Graph(ObjectBase):
     DEFAULT_EDGE_STROKE_WIDTH = 3
     LEFT_LIMIT = -4.0
     RIGHT_LIMIT = 4.0
-    TOP_LIMIT = 1.5
-    BOTTOM_LIMIT = -2.0
+    TOP_LIMIT = 1.25
+    BOTTOM_LIMIT = -2.25
     DEFAULT_FILL_OPACITY = 0.9
 
     def __init__(
@@ -194,17 +194,29 @@ class Graph(ObjectBase):
     def highlight_node(
             self,
             index: int,
-            color: ManimColor, # noqa
+            name_color: ManimColor,
+            node_color: ManimColor,
             scene: Scene
     ) -> None:
         node = self.get_node(index)
-        if node:
-            scene.play(node.node.animate.set_color(color))
+        if node and node.node:
+            if hasattr(node.node, 'text_group') and node.node.text_group is not None:
+                if isinstance(node.node.text_group, VGroup):
+                    animations = [node.node.animate.set_color(node_color)]
+                    animations.extend([text.animate.set_color(name_color) for text in node.node.text_group])
+                    scene.play(*animations)
+                else:
+                    scene.play(
+                        node.node.animate.set_color(node_color),
+                        node.node.text_group.animate.set_color(name_color)
+                    )
+            else:
+                scene.play(node.node.animate.set_color(node_color))
 
     def highlight_edge(
             self,
             index: int,
-            color: ManimColor,
+            color: ManimColor, # noqa
             scene: Scene
     ) -> None:
         edge = self.get_edge(index)

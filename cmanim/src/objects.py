@@ -25,6 +25,7 @@ class VerticalSteps(ObjectBase):
     ELLIPSE_SCALE = 1.5
     CORNER_RADIUS_DEFAULT = 0.2
     DEFAULT_WIDTH = 3.0
+    STROKE_DEFAULT = 8.0
 
     def __init__(
             self,
@@ -185,7 +186,8 @@ class VerticalSteps(ObjectBase):
                 Arrow(
                     boxes[i].get_bottom(),
                     boxes[i + 1].get_top(),
-                    color=self.arrow_color
+                    color=self.arrow_color,
+                    stroke_width=self.STROKE_DEFAULT,
                 )
             )
 
@@ -328,7 +330,8 @@ class HorizontalSteps(VerticalSteps):
                 Arrow(
                     boxes[i].get_right(),
                     boxes[i + 1].get_left(),
-                    color=self.arrow_color
+                    color=self.arrow_color,
+                    stroke_width=self.STROKE_DEFAULT,
                 )
             )
 

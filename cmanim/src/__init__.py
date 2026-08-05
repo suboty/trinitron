@@ -1,4 +1,5 @@
-from .base import ObjectBase
+from .base import ObjectBase, SceneBase
+from .colors import PALETTES
 from .entities import TextStep, TableCell, FigureTypesForText
 from .text import (
     Title,
@@ -14,6 +15,7 @@ from .table import Table
 
 __all__ = [
     'ObjectBase',
+    'SceneBase',
     'TextStep',
     'TableCell',
     'FigureTypesForText',
@@ -28,4 +30,5 @@ __all__ = [
     'HorizontalSteps',
     'Conveyor',
     'Table',
+    'PALETTES',
 ]

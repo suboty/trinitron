@@ -185,6 +185,9 @@ class TextInSomething(ObjectBase):
                 )
         self.shift_direction = shift_direction
 
+        # Инициализируем атрибут для хранения текстовой группы
+        self.text_group = None
+
         self._process_kwargs(kwargs)
 
     def _process_kwargs(self, kwargs):
@@ -211,13 +214,13 @@ class TextInSomething(ObjectBase):
             text_objects.append(text_obj)
 
         if len(text_objects) == 1:
-            text_group = text_objects[0]
+            self.text_group = text_objects[0]
         else:
-            text_group = VGroup(*text_objects).arrange(DOWN, buff=0.1)
+            self.text_group = VGroup(*text_objects).arrange(DOWN, buff=0.1)
 
-        text_group.move_to(figure.get_center())
+        self.text_group.move_to(figure.get_center())
 
-        self.add(figure, text_group)
+        self.add(figure, self.text_group)
 
         if self.shift_direction:
             match self.shift_direction:
@@ -231,6 +234,14 @@ class TextInSomething(ObjectBase):
                     self.shift(self.VERTICAL_SHIFT_SCALE * DOWN)
 
         return self
+
+    def get_text_objects(self) -> List[Text]:
+        """Возвращает список текстовых объектов"""
+        if self.text_group is None:
+            return []
+        if isinstance(self.text_group, VGroup):
+            return list(self.text_group)
+        return [self.text_group]
 
 
 class TextInBox(TextInSomething):

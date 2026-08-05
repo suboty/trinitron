@@ -106,36 +106,73 @@ class Table(ObjectBase):
             return [self.cells[row][col] for row in range(self.rows)]
         return []
 
+    def get_text_objects(self) -> List:
+        if isinstance(self.text_group, VGroup):
+            return list(self.text_group)
+        return [self.text_group]
+
     def highlight_cell(
             self,
             row: int,
             col: int,
             color: ManimColor,
+            text_color: ManimColor,
             scene: Scene
     ) -> None:
         cell = self.get_cell(row, col)
-        if cell:
-            scene.play(cell.animate.set_color(color))
+        if cell and cell.text_group is not None:
+            animations = [cell.animate.set_color(color)]
+
+            if isinstance(cell.text_group, VGroup):
+                animations.extend([text.animate.set_color(text_color) for text in cell.text_group])
+            else:
+                animations.append(cell.text_group.animate.set_color(text_color))
+
+            scene.play(*animations)
 
     def highlight_row(
             self,
             row: int,
             color: ManimColor,
+            text_color: ManimColor,
             scene: Scene
     ) -> None:
         cells = self.get_row(row)
         if cells:
-            scene.play(*[cell.animate.set_color(color) for cell in cells])
+            animations = []
+            for cell in cells:
+                if cell.text_group is not None:
+                    animations.append(cell.animate.set_color(color))
+
+                    if isinstance(cell.text_group, VGroup):
+                        animations.extend([text.animate.set_color(text_color) for text in cell.text_group])
+                    else:
+                        animations.append(cell.text_group.animate.set_color(text_color))
+
+            if animations:
+                scene.play(*animations)
 
     def highlight_col(
             self,
             col: int,
             color: ManimColor,
+            text_color: ManimColor,
             scene: Scene
     ) -> None:
         cells = self.get_col(col)
         if cells:
-            scene.play(*[cell.animate.set_color(color) for cell in cells])
+            animations = []
+            for cell in cells:
+                if cell.text_group is not None:
+                    animations.append(cell.animate.set_color(color))
+
+                    if isinstance(cell.text_group, VGroup):
+                        animations.extend([text.animate.set_color(text_color) for text in cell.text_group])
+                    else:
+                        animations.append(cell.text_group.animate.set_color(text_color))
+
+            if animations:
+                scene.play(*animations)
 
     def animate_in(
             self,
