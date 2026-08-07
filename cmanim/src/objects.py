@@ -39,6 +39,9 @@ class VerticalSteps(ObjectBase):
     ):
         super().__init__()
 
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
         if len(steps) > self.MAX_STEPS_LEN:
             raise ValueError(
                 f"Steps can have at most {self.MAX_STEPS_LEN} steps"
