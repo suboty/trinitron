@@ -136,7 +136,7 @@ class TextInSomething(ObjectBase):
     DEFAULT_FILL_OPACITY = 0.8
     VERTICAL_SHIFT_SCALE = 1.0
     HORIZONTAL_SHIFT_SCALE = 2.0
-    VALID_SHIFT_DIRECTIONS = {'left', 'right', 'up', 'down'}
+    VALID_SHIFT_DIRECTIONS = {'left', 'right', 'up', 'down', 'origin'}
 
     def __init__(
             self,
@@ -233,6 +233,8 @@ class TextInSomething(ObjectBase):
                     self.shift(self.VERTICAL_SHIFT_SCALE * UP)
                 case 'down':
                     self.shift(self.VERTICAL_SHIFT_SCALE * DOWN)
+                case 'origin':
+                    pass
 
         return self
 

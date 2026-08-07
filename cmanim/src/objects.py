@@ -360,6 +360,7 @@ class Conveyor(ObjectBase):
             visible_count: int = DEFAULT_VISIBLE_COUNT,
             shape: FigureTypesForText = FigureTypesForText.box,
             shape_params: dict = None,
+            shift_param: str | None = None
     ):
         super().__init__()
 
@@ -400,6 +401,8 @@ class Conveyor(ObjectBase):
         self.shape = shape
         self.shape_params = shape_params or {}
 
+        self.shift_param = shift_param
+
     def _get_item_width(self, item: TextStep) -> float:
         width = getattr(item, 'figure_width', None)
         if width is None:
@@ -422,6 +425,7 @@ class Conveyor(ObjectBase):
                     text_color=item.text_color,
                     figure_color=item.figure_color,
                     circle_radius=radius,
+                    shift=self.shift_param
                 ).create()
 
             case FigureTypesForText.rounded:
@@ -434,6 +438,7 @@ class Conveyor(ObjectBase):
                     box_width=item_width,
                     box_height=self.figure_height,
                     corner_radius=corner_radius,
+                    shift=self.shift_param
                 ).create()
 
             case FigureTypesForText.ellipse:
@@ -446,6 +451,7 @@ class Conveyor(ObjectBase):
                     figure_color=item.figure_color,
                     ellipse_width=ellipse_width,
                     ellipse_height=ellipse_height,
+                    shift=self.shift_param
                 ).create()
 
             case _:
@@ -456,6 +462,7 @@ class Conveyor(ObjectBase):
                     figure_color=item.figure_color,
                     box_width=item_width,
                     box_height=self.figure_height,
+                    shift=self.shift_param
                 ).create()
 
     def _get_positions(self, count: int) -> List[float]:
