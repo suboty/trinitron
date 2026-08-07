@@ -1,6 +1,6 @@
 MEDIA_DIR=videos/_rendered
 PYTHONPATH_SETUP=PYTHONPATH=$(shell pwd)
-MANIM_BASE=poetry run manim -qh
+MANIM_BASE=TTY_COMPATIBLE=0 COLUMNS=240 poetry run manim -qh
 MANIM_SHORTS=$(MANIM_BASE) -r 1080,1920
 
 FRONTEND_PATH=videos/compilers/frontend.py
@@ -14,6 +14,16 @@ install:
 
 clean:
 	rm -rf media
+
+
+create-episode-base:
+	@test -n "$(EPISODE_PATH)" || (echo "EPISODE_PATH is required"; exit 1)
+	@test -n "$(EPISODE)" || (echo "EPISODE is required"; exit 1)
+	@test -n "$(EPISODE_NAME)" || (echo "EPISODE_NAME is required"; exit 1)
+	@mkdir -p "$(EPISODE_PATH)"
+	@cp videos/template.py "$(EPISODE_PATH)/$(EPISODE_NAME).py"
+	@sed -i '' 's/EPISODE/$(EPISODE)/g' "$(EPISODE_PATH)/$(EPISODE_NAME).py"
+	@echo "Created $(EPISODE_PATH)/$(EPISODE_NAME).py"
 
 
 # FRONTEND
