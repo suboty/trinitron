@@ -22,8 +22,12 @@ class Table(ObjectBase):
             cell_height: Optional[float | int] = None,
             spacing: Optional[float | int] = None,
             table_color: Optional[ManimColor | str] = None,
+            **kwargs
     ):
         super().__init__()
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
         self.data = data
         self.rows = len(data)
