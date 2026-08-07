@@ -99,8 +99,12 @@ class Graph(ObjectBase):
             shape: FigureTypesForText = FigureTypesForText.circle,
             epsilon: float = 0.001,
             max_iterations: int = 1000,
+            **kwargs,
     ):
         super().__init__()
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
         self._all_objects = None
         self.nodes_labels = nodes

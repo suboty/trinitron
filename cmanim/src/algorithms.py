@@ -13,6 +13,12 @@ class InitSchemaTypes:
     zeros = 'zeros'
 
 
+@dataclass
+class Directions:
+    LR = 'lr'
+    TB = 'tb'
+
+
 class KamadaKawaiAlgorithm:
     def __init__(
             self,
@@ -21,7 +27,8 @@ class KamadaKawaiAlgorithm:
             height_range: Tuple[float, float],
             epsilon: float = 0.001,
             max_iterations: int = 1000,
-            init_schema: InitSchemaTypes = InitSchemaTypes.zeros
+            init_schema: InitSchemaTypes = InitSchemaTypes.zeros,
+            direction: Directions = Directions.LR,
     ):
         self.graph = graph
         self.min_width, self.max_width = width_range
@@ -46,6 +53,21 @@ class KamadaKawaiAlgorithm:
                 for node in self.graph.nodes:
                     node.pos_x = random.uniform(-0.1, 0.1)
                     node.pos_y = random.uniform(-0.1, 0.1)
+
+        if direction == Directions.TB:
+            self.rotate_positions_90_degrees_right()
+
+    def rotate_positions_90_degrees_right(self):
+        center_x = (self.min_width + self.max_width) / 2
+        center_y = (self.min_height + self.max_height) / 2
+
+        for node in self.graph.nodes:
+            rel_x = node.pos_x - center_x
+            rel_y = node.pos_y - center_y
+            new_rel_x = rel_y
+            new_rel_y = -rel_x
+            node.pos_x = center_x + new_rel_x
+            node.pos_y = center_y + new_rel_y
 
     def all_pairs_shortest_path(self) -> List[List[float]]:
         n = len(self.graph.nodes)
