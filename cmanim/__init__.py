@@ -18,6 +18,7 @@ __all__ = [
     'HorizontalSteps',
     'Conveyor',
     'Table',
+    'Graph',
     'PALETTES',
     'FadeIn',
     'FadeOut',

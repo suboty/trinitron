@@ -16,6 +16,7 @@ from .text import (
     TextInRoundedRectangle,
     TextInEllipse,
 )
+from .graph import Graph
 from .objects import VerticalSteps, HorizontalSteps, Conveyor
 from .table import Table
 
@@ -36,6 +37,7 @@ __all__ = [
     'HorizontalSteps',
     'Conveyor',
     'Table',
+    'Graph',
     'PALETTES',
     'SceneFormat',
     'FadeIn',
