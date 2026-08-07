@@ -55,7 +55,8 @@ class Title(ObjectBase):
             raise ValueError(
                 f"Too many objects ({len(objects)}) for positions ({len(self.obj_pos)})"
             )
-        for obj, position in zip(objects, self.obj_pos):
+        objects_positions = self.obj_pos if self.title_number is not None else self.obj_pos[1:]
+        for i, (obj, position) in enumerate(zip(objects, objects_positions)):
             obj.shift(position)
 
     def create(self) -> 'Title':
