@@ -108,17 +108,14 @@ class SceneBase(Scene):
             scene_format: SceneFormat = SceneFormat.FULL_HD,
             **kwargs
     ):
-        # Получаем конфигурацию для выбранного формата
         scene_config = self.FORMAT_CONFIGS[scene_format]
 
-        # Устанавливаем глобальную конфигурацию Manim ДО создания сцены
         from manim import config
         config.pixel_width = scene_config.pixel_width
         config.pixel_height = scene_config.pixel_height
         config.frame_width = scene_config.frame_width
         config.frame_height = scene_config.frame_height
 
-        # Теперь вызываем родительский __init__
         super().__init__(**kwargs)
 
         self.RIGHT_LIMIT = None
@@ -139,11 +136,9 @@ class SceneBase(Scene):
         self.LEFT_LIMIT = scene_config.left_limit
         self.RIGHT_LIMIT = scene_config.right_limit
 
-        # Устанавливаем размеры кадра
         self.camera.frame_width = self.frame_width
         self.camera.frame_height = self.frame_height
 
-        # Устанавливаем aspect_ratio если доступно
         if hasattr(self.camera, 'aspect_ratio'):
             self.camera.aspect_ratio = self.frame_width / self.frame_height
 

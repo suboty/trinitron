@@ -186,7 +186,6 @@ class TextInSomething(ObjectBase):
                 )
         self.shift_direction = shift_direction
 
-        # Инициализируем атрибут для хранения текстовой группы
         self.text_group = None
 
         self._process_kwargs(kwargs)
