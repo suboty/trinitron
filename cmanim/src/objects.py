@@ -360,9 +360,13 @@ class Conveyor(ObjectBase):
             visible_count: int = DEFAULT_VISIBLE_COUNT,
             shape: FigureTypesForText = FigureTypesForText.box,
             shape_params: dict = None,
-            shift_param: str | None = None
+            shift_param: str | None = None,
+            **kwargs,
     ):
         super().__init__()
+
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
         if visible_count < self.MIN_LEN:
             raise ValueError(
@@ -425,11 +429,13 @@ class Conveyor(ObjectBase):
                     text_color=item.text_color,
                     figure_color=item.figure_color,
                     circle_radius=radius,
-                    shift=self.shift_param
                 ).create()
 
             case FigureTypesForText.rounded:
-                corner_radius = self.shape_params.get('corner_radius', self.CORNER_RADIUS_DEFAULT)
+                corner_radius = self.shape_params.get(
+                    'corner_radius',
+                    self.CORNER_RADIUS_DEFAULT
+                )
                 return TextInRoundedRectangle(
                     text=item.text,
                     text_font_size=item.text_font_size,
@@ -438,12 +444,17 @@ class Conveyor(ObjectBase):
                     box_width=item_width,
                     box_height=self.figure_height,
                     corner_radius=corner_radius,
-                    shift=self.shift_param
                 ).create()
 
             case FigureTypesForText.ellipse:
-                ellipse_width = self.shape_params.get('ellipse_width', item_width)
-                ellipse_height = self.shape_params.get('ellipse_height', self.figure_height)
+                ellipse_width = self.shape_params.get(
+                    'ellipse_width',
+                    item_width
+                )
+                ellipse_height = self.shape_params.get(
+                    'ellipse_height',
+                    self.figure_height
+                )
                 return TextInEllipse(
                     text=item.text,
                     text_font_size=item.text_font_size,
@@ -451,7 +462,6 @@ class Conveyor(ObjectBase):
                     figure_color=item.figure_color,
                     ellipse_width=ellipse_width,
                     ellipse_height=ellipse_height,
-                    shift=self.shift_param
                 ).create()
 
             case _:
@@ -462,98 +472,216 @@ class Conveyor(ObjectBase):
                     figure_color=item.figure_color,
                     box_width=item_width,
                     box_height=self.figure_height,
-                    shift=self.shift_param
                 ).create()
 
     def _get_positions(self, count: int) -> List[float]:
-        total_width = count * self.box_width + (count - 1) * self.MIN_SPACING
+        total_width = (
+            count * self.box_width
+            + (count - 1) * self.MIN_SPACING
+        )
         center_x = (self.RIGHT_LIMIT + self.LEFT_LIMIT) / 2
         start_x = center_x - total_width / 2 + self.box_width / 2
 
         positions = []
         for i in range(count):
-            x_pos = start_x + i * (self.box_width + self.MIN_SPACING)
+            x_pos = start_x + i * (
+                self.box_width + self.MIN_SPACING
+            )
             positions.append(x_pos)
 
         return positions
 
+    def _get_shift_vector(self, scale: int | float = 1.0):
+        if self.shift_param is None:
+            return ORIGIN
+
+        match self.shift_param:
+            case 'left':
+                return (
+                    scale * LEFT
+                )
+            case 'right':
+                return (
+                    scale * RIGHT
+                )
+            case 'up':
+                return (
+                    scale * UP
+                )
+            case 'down':
+                return (
+                    scale * DOWN
+                )
+            case 'origin':
+                return scale * ORIGIN
+            case _:
+                return scale * ORIGIN
+
     def create(self) -> 'Conveyor':
         visible_items = self.items[:self.visible_count]
         positions = self._get_positions(self.visible_count)
+        shift_vector = self._get_shift_vector()
 
         self.boxes = []
+
         for i, item in enumerate(visible_items):
             box = self._create_box(item)
-            box.shift(RIGHT * positions[i])
+
+            box.shift(
+                RIGHT * positions[i]
+                + shift_vector
+            )
+
             self.boxes.append(box)
 
         self.add(*self.boxes)
         return self
 
-    def step_forward(self, scene: Scene, run_time: float = 0.5) -> None:
-        if self.current_index + self.visible_count >= len(self.items):
+    def step_forward(
+            self,
+            scene: Scene,
+            run_time: float = 0.5
+    ) -> None:
+        if (
+            self.current_index + self.visible_count
+            >= len(self.items)
+        ):
             return
 
         positions = self._get_positions(self.visible_count)
+        shift_vector = self._get_shift_vector()
 
         first_box = self.boxes[0]
-        scene.play(FadeOut(first_box, run_time=self.FADE_DURATION))
+
+        scene.play(
+            FadeOut(
+                first_box,
+                run_time=self.FADE_DURATION
+            )
+        )
+
         scene.wait(0.1)
 
         animations = []
+
         for i in range(1, len(self.boxes)):
             new_index = i - 1
             target_x = positions[new_index]
+
+            target_position = (
+                RIGHT * target_x
+                + shift_vector
+            )
+
             animations.append(
-                self.boxes[i].animate.move_to(RIGHT * target_x)
+                self.boxes[i]
+                .animate
+                .move_to(target_position)
             )
 
         if animations:
-            scene.play(*animations, run_time=run_time)
+            scene.play(
+                *animations,
+                run_time=run_time
+            )
 
         self.remove(first_box)
         self.boxes.pop(0)
 
-        next_item = self.items[self.current_index + self.visible_count]
+        next_item = self.items[
+            self.current_index + self.visible_count
+        ]
+
         new_box = self._create_box(next_item)
 
         last_position = positions[-1]
-        new_box.shift(RIGHT * last_position)
 
-        scene.play(FadeIn(new_box, run_time=self.FADE_DURATION))
+        new_box.shift(
+            RIGHT * last_position
+            + shift_vector
+        )
+
+        scene.play(
+            FadeIn(
+                new_box,
+                run_time=self.FADE_DURATION
+            )
+        )
 
         self.boxes.append(new_box)
         self.add(new_box)
 
         self.current_index += 1
 
-    def step_forward_fast(self, scene: Scene, run_time: float = 0.5) -> None:
-        if self.current_index + self.visible_count >= len(self.items):
+    def step_forward_fast(
+            self,
+            scene: Scene,
+            run_time: float = 0.5
+    ) -> None:
+        if (
+            self.current_index + self.visible_count
+            >= len(self.items)
+        ):
             return
 
         positions = self._get_positions(self.visible_count)
+        shift_vector = self._get_shift_vector()
 
-        next_item = self.items[self.current_index + self.visible_count]
+        next_item = self.items[
+            self.current_index + self.visible_count
+        ]
+
         new_box = self._create_box(next_item)
+
         last_position = positions[-1]
-        new_box.shift(RIGHT * last_position)
+
+        new_box.shift(
+            RIGHT * last_position
+            + shift_vector
+        )
+
         self.add(new_box)
 
         animations = []
 
         first_box = self.boxes[0]
-        animations.append(FadeOut(first_box, run_time=self.FADE_DURATION))
+
+        animations.append(
+            FadeOut(
+                first_box,
+                run_time=self.FADE_DURATION
+            )
+        )
 
         for i in range(1, len(self.boxes)):
             new_index = i - 1
             target_x = positions[new_index]
-            animations.append(
-                self.boxes[i].animate.move_to(RIGHT * target_x)
+
+            target_position = (
+                RIGHT * target_x
+                + shift_vector
             )
 
-        animations.append(FadeIn(new_box, run_time=self.FADE_DURATION))
+            animations.append(
+                self.boxes[i]
+                .animate
+                .move_to(target_position)
+            )
 
-        scene.play(*animations, run_time=max(run_time, self.FADE_DURATION))
+        animations.append(
+            FadeIn(
+                new_box,
+                run_time=self.FADE_DURATION
+            )
+        )
+
+        scene.play(
+            *animations,
+            run_time=max(
+                run_time,
+                self.FADE_DURATION
+            )
+        )
 
         self.remove(first_box)
         self.boxes.pop(0)
@@ -569,12 +697,27 @@ class Conveyor(ObjectBase):
             is_fast: bool = False,
             **kwargs
     ) -> None:
-        scene.play(FadeIn(self, run_time=self.FADE_DURATION))
-        while self.current_index + self.visible_count < len(self.items):
+        scene.play(
+            FadeIn(
+                self,
+                run_time=self.FADE_DURATION
+            )
+        )
+
+        while (
+            self.current_index + self.visible_count
+            < len(self.items)
+        ):
             if is_fast:
-                self.step_forward_fast(scene, run_time)
+                self.step_forward_fast(
+                    scene,
+                    run_time
+                )
             else:
-                self.step_forward(scene, run_time)
+                self.step_forward(
+                    scene,
+                    run_time
+                )
 
     def animate_out(
             self,
@@ -582,5 +725,150 @@ class Conveyor(ObjectBase):
             run_time: float = ObjectBase.DEFAULT_DURATION,
             **kwargs
     ) -> None:
-        scene.play(FadeOut(self, run_time=run_time))
+        scene.play(
+            FadeOut(
+                self,
+                run_time=run_time
+            )
+        )
+
         scene.remove(self)
+
+    @staticmethod
+    def animate_in_two(
+            scene: Scene,
+            first: 'Conveyor',
+            second: 'Conveyor',
+            run_time: float = ObjectBase.DEFAULT_DURATION,
+            **kwargs
+    ) -> None:
+        scene.play(
+            FadeIn(
+                first,
+                run_time=first.FADE_DURATION
+            ),
+            FadeIn(
+                second,
+                run_time=second.FADE_DURATION
+            )
+        )
+
+        while (
+                first.current_index + first.visible_count < len(first.items)
+                or
+                second.current_index + second.visible_count < len(second.items)
+        ):
+            animations = []
+
+            for conveyor in (first, second):
+                if (
+                        conveyor.current_index + conveyor.visible_count
+                        >= len(conveyor.items)
+                ):
+                    continue
+
+                positions = conveyor._get_positions(
+                    conveyor.visible_count
+                )
+                shift_vector = conveyor._get_shift_vector()
+
+                first_box = conveyor.boxes[0]
+
+                next_item = conveyor.items[
+                    conveyor.current_index + conveyor.visible_count
+                ]
+
+                new_box = conveyor._create_box(next_item)
+
+                last_position = positions[-1]
+
+                new_box.shift(
+                    RIGHT * last_position
+                    + shift_vector
+                )
+
+                conveyor.add(new_box)
+
+                animations.append(
+                    FadeOut(
+                        first_box,
+                        run_time=conveyor.FADE_DURATION
+                    )
+                )
+
+                for i in range(1, len(conveyor.boxes)):
+                    new_index = i - 1
+                    target_x = positions[new_index]
+
+                    target_position = (
+                            RIGHT * target_x
+                            + shift_vector
+                    )
+
+                    animations.append(
+                        conveyor.boxes[i]
+                        .animate
+                        .move_to(target_position)
+                    )
+
+                animations.append(
+                    FadeIn(
+                        new_box,
+                        run_time=conveyor.FADE_DURATION
+                    )
+                )
+
+                conveyor._pending_first_box = first_box
+                conveyor._pending_new_box = new_box
+
+            if animations:
+                scene.play(
+                    *animations,
+                    run_time=max(
+                        run_time,
+                        first.FADE_DURATION,
+                        second.FADE_DURATION
+                    )
+                )
+
+            for conveyor in (first, second):
+                if not hasattr(conveyor, '_pending_first_box'):
+                    continue
+
+                conveyor.remove(
+                    conveyor._pending_first_box
+                )
+                conveyor.boxes.pop(0)
+
+                conveyor.boxes.append(
+                    conveyor._pending_new_box
+                )
+
+                conveyor.current_index += 1
+
+                del conveyor._pending_first_box
+                del conveyor._pending_new_box
+
+    @staticmethod
+    def animate_out_two(
+            scene: Scene,
+            first: 'Conveyor',
+            second: 'Conveyor',
+            run_time: float = ObjectBase.DEFAULT_DURATION,
+            **kwargs
+    ) -> None:
+        scene.play(
+            FadeOut(
+                first,
+                run_time=run_time
+            ),
+            FadeOut(
+                second,
+                run_time=run_time
+            )
+        )
+
+        scene.remove(
+            first,
+            second
+        )
