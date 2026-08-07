@@ -1,36 +1,68 @@
+MEDIA_DIR=videos/_rendered
+PYTHONPATH_SETUP=PYTHONPATH=$(shell pwd)
+MANIM_BASE=poetry run manim -qh
+MANIM_SHORTS=$(MANIM_BASE) -r 1080,1920
+
+FRONTEND_PATH=videos/compilers/frontend.py
+LEXER_PATH=videos/compilers/lexer.py
+PARSER_PATH=videos/compilers/parser.py
+SEMANTIC_PATH=videos/compilers/semantic.py
+
 install:
 	poetry install --no-root
 	chmod +x scripts/clean_manim_output.sh
 
-MEDIA_DIR=videos/_rendered
+clean:
+	rm -rf media
 
 
-# TEST
+# FRONTEND
 
-test-episode-build:
-	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/_test/episode.py TestAnimation
-	./scripts/clean_manim_output.sh $(MEDIA_DIR) TestAnimation
+frontend-episode-build-hd:
+	$(PYTHONPATH_SETUP) $(MANIM_BASE) $(FRONTEND_PATH) FrontendAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) FrontendAnimation frontend
+
+frontend-episode-build-shorts:
+	$(PYTHONPATH_SETUP) $(MANIM_SHORTS) $(FRONTEND_PATH) FrontendAnimationShorts
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) FrontendAnimationShorts frontend
+
+frontend-episode-build-all: frontend-episode-build-hd frontend-episode-build-shorts
 
 
-# TRINITRON EPISODES
+# LEXER
 
-lexer-episode-build:
-	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/lexer/episode.py LexerAnimation
-	./scripts/clean_manim_output.sh $(MEDIA_DIR) LexerAnimation
+lexer-episode-build-hd:
+	$(PYTHONPATH_SETUP) $(MANIM_BASE) $(LEXER_PATH) LexerAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) LexerAnimation lexer
 
-parser-episode-build:
-	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/parser/episode.py ParserAnimation
-	./scripts/clean_manim_output.sh $(MEDIA_DIR) ParserAnimation
+lexer-episode-build-shorts:
+	$(PYTHONPATH_SETUP) $(MANIM_SHORTS) $(LEXER_PATH) LexerAnimationShorts
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) LexerAnimationShorts lexer
 
-semantic-episode-build:
-	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/semantic/episode.py SemanticAnimation
-	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimation
+lexer-episode-build-all: lexer-episode-build-hd lexer-episode-build-shorts
 
-frontend-episode-build:
-	PYTHONPATH=$(shell pwd)/videos \
-		poetry run manim -pqh --media_dir $(MEDIA_DIR) videos/compilers/frontend/episode.py FrontendAnimation
-	./scripts/clean_manim_output.sh $(MEDIA_DIR) FrontendAnimation
+
+# PARSER
+
+parser-episode-build-hd:
+	$(PYTHONPATH_SETUP) $(MANIM_BASE) $(PARSER_PATH) ParserAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) ParserAnimation parser
+
+parser-episode-build-shorts:
+	$(PYTHONPATH_SETUP) $(MANIM_SHORTS) $(PARSER_PATH) ParserAnimationShorts
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) ParserAnimationShorts parser
+
+parser-episode-build-all: parser-episode-build-hd parser-episode-build-shorts
+
+
+# SEMANTIC
+
+semantic-episode-build-hd:
+	$(PYTHONPATH_SETUP) $(MANIM_BASE) $(SEMANTIC_PATH) SemanticAnimation
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimation semantic
+
+semantic-episode-build-shorts:
+	$(PYTHONPATH_SETUP) $(MANIM_SHORTS) $(SEMANTIC_PATH) SemanticAnimationShorts
+	./scripts/clean_manim_output.sh $(MEDIA_DIR) SemanticAnimationShorts semantic
+
+semantic-episode-build-all: semantic-episode-build-hd semantic-episode-build-shorts
