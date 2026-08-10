@@ -1,5 +1,5 @@
-from typing import List, Tuple
-from dataclasses import dataclass
+from typing import List, Tuple, Optional
+from dataclasses import dataclass, field
 from enum import Enum
 
 from manim import *
@@ -32,11 +32,34 @@ class FigureTypesForText(Enum):
 @dataclass
 class NodeData:
     name: str
-    pos_x: float = None
-    pos_y: float = None
+    children: List['NodeData'] = field(default_factory=list)
+    parent: Optional['NodeData'] = None
+
+    pos_x: float | None = 0.0
+    pos_y: float | None = 0.0
+
+    mod: float | None = None
+    thread: Optional['NodeData'] = None
+    ancestor: Optional['NodeData'] = None
 
 
 @dataclass
 class GraphData:
     nodes: List[NodeData]
     edges: List[Tuple[int, int]]
+
+    def build_tree(self) -> None:
+        for node in self.nodes:
+            node.children = []
+            node.parent = None
+
+        for parent_idx, child_idx in self.edges:
+            parent = self.nodes[parent_idx]
+            child = self.nodes[child_idx]
+
+            if child not in parent.children:
+                parent.children.append(child)
+
+            if child.parent is not None:
+                raise ValueError(f"Node {child.name} already has a parent!")
+            child.parent = parent

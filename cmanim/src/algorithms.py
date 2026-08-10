@@ -54,7 +54,7 @@ class KamadaKawaiAlgorithm:
                     node.pos_x = random.uniform(-0.1, 0.1)
                     node.pos_y = random.uniform(-0.1, 0.1)
 
-        if direction == Directions.TB:
+        if direction == 'tb':
             self.rotate_positions_90_degrees_right()
 
     def rotate_positions_90_degrees_right(self):
@@ -218,3 +218,171 @@ class KamadaKawaiAlgorithm:
 
     def __call__(self) -> int:
         return self.step()
+
+
+@dataclass
+class ReingoldTilfordAlgorithm:
+    def __init__(
+            self,
+            graph: GraphData,
+            width_range: Tuple[float, float],
+            height_range: Tuple[float, float],
+            horizontal_spacing: float = 1.0,
+            vertical_spacing: float = 1.0,
+            direction: Directions = Directions.TB,
+    ):
+        self.graph = graph
+        self.min_width, self.max_width = width_range
+        self.min_height, self.max_height = height_range
+        self.horizontal_spacing = horizontal_spacing
+        self.vertical_spacing = vertical_spacing
+        self.direction = direction
+
+        self._normalize_factor = 1.0
+
+        self.root = self._find_root()
+        if self.root is None:
+            raise ValueError(
+                "Graph must have exactly one root node (node with parent=None)"
+            )
+
+        self._init_temp_fields()
+
+    def _find_root(self) -> NodeData | None:
+        roots = [node for node in self.graph.nodes if node.parent is None]
+        if len(roots) == 0:
+            all_children = set()
+            for node in self.graph.nodes:
+                all_children.update(node.children)
+            for node in self.graph.nodes:
+                if node not in all_children:
+                    return node
+            return None
+        return roots[0] if roots else None
+
+    def _init_temp_fields(self):
+        for node in self.graph.nodes:
+            node.mod = 0.0
+            node.thread = None
+            node.ancestor = node
+
+    @staticmethod
+    def get_left_sibling(node: NodeData) -> NodeData | None:
+        if node.parent is None:
+            return None
+        siblings = node.parent.children
+        try:
+            index = siblings.index(node)
+        except ValueError:
+            return None
+        if index > 0:
+            return siblings[index - 1]
+        return None
+
+    @staticmethod
+    def get_first_child(node: NodeData) -> NodeData | None:
+        return node.children[0] if node.children else None
+
+    @staticmethod
+    def get_last_child(node: NodeData) -> NodeData | None:
+        return node.children[-1] if node.children else None
+
+    def first_walk(self, node: NodeData, depth: int) -> None:
+        node.pos_y = depth * self.vertical_spacing
+
+        if not node.children:
+            if node.parent is not None:
+                left_sibling = self.get_left_sibling(node)
+                if left_sibling is not None:
+                    node.pos_x = left_sibling.pos_x + self.horizontal_spacing
+            else:
+                node.pos_x = 0.0
+        else:
+            for child in node.children:
+                self.first_walk(child, depth + 1)
+
+            first_child = self.get_first_child(node)
+            last_child = self.get_last_child(node)
+            if first_child is not None and last_child is not None:
+                mid = (first_child.pos_x + last_child.pos_x) / 2.0
+            else:
+                mid = 0.0
+
+            left_sibling = self.get_left_sibling(node)
+            if left_sibling is not None:
+                node.pos_x = left_sibling.pos_x + self.horizontal_spacing
+                node.mod = node.pos_x - mid
+            else:
+                node.pos_x = mid
+
+    def second_walk(self, node: NodeData, cum_mod: float) -> None:
+        node.pos_x = node.pos_x + cum_mod
+        for child in node.children:
+            self.second_walk(child, cum_mod + (node.mod or 0.0))
+
+    def normalize_coordinates(self) -> None:
+        if not self.graph.nodes:
+            return
+
+        min_x = min(node.pos_x for node in self.graph.nodes)
+        max_x = max(node.pos_x for node in self.graph.nodes)
+        min_y = min(node.pos_y for node in self.graph.nodes)
+        max_y = max(node.pos_y for node in self.graph.nodes)
+
+        x_range = max_x - min_x
+        y_range = max_y - min_y
+        target_x_range = self.max_width - self.min_width
+        target_y_range = self.max_height - self.min_height
+
+        for node in self.graph.nodes:
+            norm_x = (node.pos_x - min_x) / x_range if x_range > 0 else 0.5
+            norm_y = (node.pos_y - min_y) / y_range if y_range > 0 else 0.5
+
+            node.pos_x = self.min_width + norm_x * target_x_range
+            node.pos_y = self.min_height + norm_y * target_y_range
+
+    def apply_direction(self) -> None:
+        if self.direction == 'tb':
+            min_y = min(node.pos_y for node in self.graph.nodes)
+            max_y = max(node.pos_y for node in self.graph.nodes)
+            for node in self.graph.nodes:
+                node.pos_y = max_y + min_y - node.pos_y
+
+        elif self.direction == 'lr':
+            center_x = sum(node.pos_x for node in self.graph.nodes) / len(self.graph.nodes)
+            center_y = sum(node.pos_y for node in self.graph.nodes) / len(self.graph.nodes)
+            for node in self.graph.nodes:
+                rel_x = node.pos_x - center_x
+                rel_y = node.pos_y - center_y
+                new_rel_x = rel_y
+                new_rel_y = -rel_x
+                node.pos_x = center_x + new_rel_x
+                node.pos_y = center_y + new_rel_y
+            min_y = min(node.pos_y for node in self.graph.nodes)
+            max_y = max(node.pos_y for node in self.graph.nodes)
+            for node in self.graph.nodes:
+                node.pos_y = max_y + min_y - node.pos_y
+
+    def run(self) -> List[NodeData]:
+        if self.root is None:
+            raise ValueError(
+                "No root node found in the graph"
+            )
+
+        self._init_temp_fields()
+
+        self.first_walk(self.root, 0)
+        self.second_walk(self.root, 0.0)
+
+        self.normalize_coordinates()
+
+        self.apply_direction()
+
+        return self.graph.nodes
+
+    def __call__(self) -> List[NodeData]:
+        return self.run()
+
+    def step(self) -> int:
+        self.run()
+        return -1

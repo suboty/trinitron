@@ -4,7 +4,10 @@ from manim import *
 
 from .base import ObjectBase
 from .entities import FigureTypesForText, GraphData, NodeData
-from .algorithms import KamadaKawaiAlgorithm
+from .algorithms import (
+    KamadaKawaiAlgorithm,
+    ReingoldTilfordAlgorithm,
+)
 from .text import (
     TextInSomething,
     TextInCircle,
@@ -99,9 +102,14 @@ class Graph(ObjectBase):
             shape: FigureTypesForText = FigureTypesForText.circle,
             epsilon: float = 0.001,
             max_iterations: int = 1000,
+            graph_for_visualization: str = 'reingold_tilford',
             **kwargs,
     ):
         super().__init__()
+
+        if graph_for_visualization not in ('reingold_tilford', 'kamada_kawai'):
+            raise NotImplementedError(graph_for_visualization)
+        self.graph_for_visualization = graph_for_visualization
 
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -131,15 +139,26 @@ class Graph(ObjectBase):
         width_range = (self.LEFT_LIMIT, self.RIGHT_LIMIT)
         height_range = (self.BOTTOM_LIMIT, self.TOP_LIMIT)
 
-        kk = KamadaKawaiAlgorithm(
-            graph=graph_data,
-            width_range=width_range,
-            height_range=height_range,
-            epsilon=self.epsilon,
-            max_iterations=self.max_iterations,
-        )
+        match self.graph_for_visualization:
+            case 'reingold_tilford':
+                graph_data.build_tree()
+                rt = ReingoldTilfordAlgorithm(
+                    graph=graph_data,
+                    width_range=width_range,
+                    height_range=height_range,
+                )
 
-        result = kk.run()
+                result = rt.run()
+            case 'kamada_kawai':
+                kk = KamadaKawaiAlgorithm(
+                    graph=graph_data,
+                    width_range=width_range,
+                    height_range=height_range,
+                    epsilon=self.epsilon,
+                    max_iterations=self.max_iterations,
+                )
+
+                result = kk.run()
 
         return [(node.pos_x, node.pos_y) for node in result]
 
