@@ -105,7 +105,9 @@ class ParserAnimation(SceneBase):
             shape=FigureTypesForText.circle,
             max_iterations=100,
             TOP_LIMIT=1.0,
-            BOTTOM_LIMIT=-5,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 
@@ -140,7 +142,6 @@ class ParserAnimation(SceneBase):
             figure_color=self.palette_colors.success,
             visible_count=3,
             shape=FigureTypesForText.rounded,
-            shift_param='down',
         ).create()
         conveyor_tokens.animate_in(self, run_time=1.0, is_fast=True)
 
@@ -259,7 +260,9 @@ class ParserAnimation(SceneBase):
             shape=FigureTypesForText.circle,
             max_iterations=500,
             TOP_LIMIT=1.0,
-            BOTTOM_LIMIT=-5,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 

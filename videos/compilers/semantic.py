@@ -70,7 +70,9 @@ class SemanticAnimation(SceneBase):
             shape=FigureTypesForText.circle,
             max_iterations=100,
             TOP_LIMIT=1.0,
-            BOTTOM_LIMIT=-5,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 
@@ -115,7 +117,9 @@ class SemanticAnimation(SceneBase):
             shape=FigureTypesForText.circle,
             max_iterations=100,
             TOP_LIMIT=1.0,
-            BOTTOM_LIMIT=-5,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 
@@ -245,7 +249,9 @@ class SemanticAnimation(SceneBase):
             shape=FigureTypesForText.circle,
             max_iterations=100,
             TOP_LIMIT=1.0,
-            BOTTOM_LIMIT=-5,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 
@@ -400,8 +406,10 @@ class SemanticAnimation(SceneBase):
             edge_color=self.palette_colors.success,
             shape=FigureTypesForText.circle,
             max_iterations=100,
-            TOP_LIMIT=0.8,
-            BOTTOM_LIMIT=-5,
+            TOP_LIMIT=1.0,
+            RIGHT_LIMIT=2.0,
+            LEFT_LIMIT=-2.0,
+            BOTTOM_LIMIT=-2.0,
         ).create()
         graph.animate_in(self, run_time=2, lag_ratio=0.1)
 
