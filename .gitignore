@@ -63,7 +63,13 @@ videos/_rendered/videos/*
 
 
 # ==========
-# other
+# future episodes
 # ==========
 
-scenario.md
+videos/automatas/*
+videos/evolution_algorithms/*
+videos/regular_expressions/*
+videos/compilers/chomsky_hierarchy.py
+videos/compilers/compiler.py
+videos/compilers/context_free_grammars.py
+videos/compilers/interpreter.py
